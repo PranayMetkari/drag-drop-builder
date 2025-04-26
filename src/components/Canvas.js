@@ -70,15 +70,27 @@ const Canvas = () => {
           isOver ? 'border-blue-400' : 'border-gray-300'
         }`}
       >
-        {elements.map((el, index) => (
-          <DraggableElement
-            key={el.id}
-            element={el}
-            index={index}
-            onClick={() => handleElementClick(el)}
-            moveElement={moveElement}
-          />
-        ))}
+        <div className="flex flex-wrap gap-4">
+          {elements.map((el, index) => (
+            <DraggableElement
+              key={el.id}
+              element={el}
+              index={index}
+              onClick={() => handleElementClick(el)}
+              moveElement={moveElement}
+              onResize={(newStyles) => {
+                const updated = {
+                  ...el,
+                  styles: {
+                    ...el.styles,
+                    ...newStyles,
+                  },
+                };
+                handleElementChange(updated);
+              }}
+            />
+          ))}
+        </div>
       </div>
 
       <div className="col-span-1 border-l border-gray-300 p-4 bg-gray-50">
